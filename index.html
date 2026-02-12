@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>VELVET STRANDS • atelier</title>
+  <!-- sophisticated fonts: Playfair Display (serif) + Inter (sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Playfair+Display:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (free icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ---------- design system — professional, calm, luxurious ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --absolute-white: #ffffff;
+      --soft-parchment: #faf7f2;   /* main background */
+      --pure-charcoal: #1e1e1e;    /* primary text */
+      --warm-gold: #a28253;        /* refined accent – antique gold */
+      --dusty-sand: #e1d6cd;       /* divider, subtle borders */
+      --greige: #8f8b85;           /* secondary text */
+      --card-bg: #ffffff;
+      --shadow-sm: 0 20px 35px -10px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.02);
+      --shadow-hover: 0 30px 50px -18px rgba(0,0,0,0.12);
+      --border-light: 1px solid rgba(0,0,0,0.04);
+      --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      --gold-glow: 0 0 0 1px rgba(162, 130, 83, 0.12);
+    }
+
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 300;
+      background-color: var(--soft-parchment);
+      color: var(--pure-charcoal);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    section {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    /* ----- subtle reveal on scroll (js‑powered) ----- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s cubic-bezier(0.23, 1, 0.32, 1), transform 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ----- typography polish ----- */
+    .section-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--pure-charcoal);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .section-subhead {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--greige);
+      max-width: 600px;
+      margin: 0 auto 48px auto;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      word-spacing: 2px;
+    }
+
+    /* ----- buttons — minimal, gold, refined ----- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: transparent;
+      border: 1.5px solid var(--warm-gold);
+      color: var(--pure-charcoal);
+      padding: 16px 44px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 0px;
+      transition: var(--transition);
+      background-color: transparent;
+    }
+
+    .btn i {
+      font-size: 1.2rem;
+      color: var(--warm-gold);
+      transition: var(--transition);
+    }
+
+    .btn:hover {
+      background-color: var(--warm-gold);
+      color: white;
+      border-color: var(--warm-gold);
+    }
+
+    .btn:hover i {
+      color: white;
+    }
+
+    /* ----- HERO — editorial, minimal ----- */
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: var(--soft-parchment);
+      border-bottom: var(--border-light);
+      padding: 0;
+    }
+
+    .hero-content {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 5.5rem;
+      font-weight: 900;
+      color: #161616;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .hero-tagline {
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: #4e4e4e;
+      margin-bottom: 48px;
+      font-style: normal;
+      letter-spacing: 1px;
+      text-transform: none;
+      border-top: 1px solid var(--dusty-sand);
+      border-bottom: 1px solid var(--dusty-sand);
+      display: inline-block;
+      padding: 16px 32px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ----- ABOUT — quiet, confident ----- */
+    .about {
+      background: var(--absolute-white);
+      border-radius: 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .about-text {
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: #2c2c2c;
+      text-align: center;
+      line-height: 1.7;
+      font-family: "Inter", sans-serif;
+    }
+
+    .about-signature {
+      margin-top: 32px;
+      font-size: 0.9rem;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--warm-gold);
+    }
+
+    /* ----- SERVICES grid — gallery style, no excess ----- */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .service-card {
+      background: white;
+      border: var(--border-light);
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-card:hover {
+      transform: translateY(-12px);
+      box-shadow: var(--shadow-hover);
+      border-color: transparent;
+    }
+
+    .image-wrapper {
+      width: 100%;
+      padding-bottom: 125%; /* 4:5 ratio – editorial */
+      position: relative;
+      overflow: hidden;
+      background-color: #f0ebe6;
+    }
+
+    .image-wrapper img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    .service-card:hover img {
+      transform: scale(1.06);
+    }
+
+    .service-meta {
+      padding: 28px 24px 32px;
+      text-align: left;
+    }
+
+    .service-meta h3 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #1a1a1a;
+      letter-spacing: -0.02em;
+    }
+
+    .service-meta p {
+      color: #6b6b6b;
+      font-weight: 300;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* ----- TESTIMONIALS — timeless, gallery-worthy ----- */
+    .testimonials {
+      background: var(--absolute-white);
+      border-top: var(--border-light);
+      border-bottom: var(--border-light);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px;
+      max-width: 1000px;
+      margin: 60px auto 0;
+    }
+
+    @media (max-width: 768px) {
+      .testimonial-grid { grid-template-columns: 1fr; }
+    }
+
+    .testimonial-item {
+      padding: 0 12px;
+    }
+
+    .testimonial-quote {
+      font-size: 1.25rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: #2e2e2e;
+      margin-bottom: 32px;
+      position: relative;
+    }
+
+    .testimonial-quote::before {
+      content: "“";
+      font-family: "Playfair Display", serif;
+      font-size: 5rem;
+      color: var(--dusty-sand);
+      position: absolute;
+      left: -24px;
+      top: -24px;
+      opacity: 0.6;
+      z-index: 0;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-top: 1px solid var(--dusty-sand);
+      padding-top: 24px;
+    }
+
+    .author-name {
+      font-weight: 600;
+      color: #1e1e1e;
+      letter-spacing: 1px;
+    }
+
+    .author-title {
+      font-size: 0.8rem;
+      color: var(--greige);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .stars {
+      color: var(--warm-gold);
+      font-size: 0.9rem;
+      letter-spacing: 3px;
+      margin-left: auto;
+    }
+
+    /* ----- CONTACT — airy, iconic ----- */
+    .contact {
+      background: var(--soft-parchment);
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 72px;
+      margin-top: 48px;
+    }
+
+    .contact-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: var(--pure-charcoal);
+      transition: var(--transition);
+      gap: 16px;
+    }
+
+    .contact-link i {
+      font-size: 2.4rem;
+      color: var(--warm-gold);
+      transition: 0.25s;
+    }
+
+    .contact-link span {
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      border-bottom: 1px dotted transparent;
+      transition: border 0.2s;
+    }
+
+    .contact-link:hover i {
+      transform: translateY(-8px);
+      color: #6b5a41;
+    }
+
+    .contact-link:hover span {
+      border-bottom: 1px dotted var(--warm-gold);
+    }
+
+    /* ----- FOOTER — minimal, dark ----- */
+    footer {
+      background: #1a1a1a;
+      color: #cacaca;
+      padding: 64px 0 48px;
+      margin-top: 0;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 36px;
+      margin-bottom: 36px;
+    }
+
+    .footer-social a {
+      color: #b0a8a0;
+      font-size: 1.8rem;
+      transition: var(--transition);
+    }
+
+    .footer-social a:hover {
+      color: var(--warm-gold);
+      transform: translateY(-6px);
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    /* ----- small micro-animations (polish) ----- */
+    .btn, .service-card, .contact-link, .footer-social a {
+      will-change: transform, opacity, box-shadow;
+    }
+
+    /* ----- responsive adjustments ----- */
+    @media (max-width: 1024px) {
+      .hero h1 { font-size: 4.5rem; }
+      .section-title { font-size: 2.5rem; }
+    }
+
+    @media (max-width: 640px) {
+      section { padding: 80px 0; }
+      .hero h1 { font-size: 3.2rem; }
+      .hero-tagline { font-size: 1rem; padding: 12px 20px; }
+      .container { padding: 0 24px; }
+      .services-grid { gap: 24px; }
+      .contact-links { gap: 40px; }
+    }
+
+    /* ----- simple back-to-top (extra polish) ----- */
+    .to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background: white;
+      color: var(--pure-charcoal);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      text-decoration: none;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
+      border: var(--border-light);
+      z-index: 100;
+    }
+
+    .to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .to-top i {
+      font-size: 1.2rem;
+      color: var(--warm-gold);
+    }
+
+    .to-top:hover {
+      background: var(--warm-gold);
+    }
+    .to-top:hover i { color: white; }
+  </style>
+</head>
+<body>
+  <!-- fixed back to top (js controls visibility) -->
+  <a href="#" class="to-top" id="toTopBtn" aria-label="back to top"><i class="fas fa-arrow-up"></i></a>
+
+  <!-- HERO SECTION — elevated editorial -->
+  <section class="hero" id="top">
+    <div class="container hero-content reveal active">
+      <h1>VELVET STRANDS</h1>
+      <div class="hero-tagline">effortless architecture for hair</div>
+      <!-- WhatsApp CTA — minimal gold button -->
+      <a href="https://wa.me/447123456789?text=Hello%20Velvet%20Strands%20—%20I'd%20like%20to%20inquire%20about%20a%20reservation" 
+         class="btn" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+        <span>book via whatsapp</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT — short, textured, quiet -->
+  <section class="about">
+    <div class="container reveal">
+      <div class="about-text">
+        <p style="font-family: 'Playfair Display'; font-size: 2rem; color: var(--warm-gold); margin-bottom: 24px;">⏤</p>
+        <p>Velvet Strands is an intimate atelier for hair and self‑expression. We work with texture, light, and the natural rhythm of your hair. No formulas, no rush—only considered craftsmanship in the heart of London.</p>
+        <div class="about-signature">since 2018</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES — 4 signature offerings, gallery aesthetic -->
+  <section class="services">
+    <div class="container">
+      <div class="reveal">
+        <h2 class="section-title" style="text-align: center;">services</h2>
+        <div class="section-subhead" style="text-align: center;">editorial · structural · organic</div>
+      </div>
+      <div class="services-grid">
+        <!-- 1. precision cut -->
+        <div class="service-card reveal">
+          <div class="image-wrapper">
+            <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=800&h=1000&fit=crop&auto=format&q=80" alt="precision haircut" loading="lazy">
+          </div>
+          <div class="service-meta">
+            <h3>precision cut</h3>
+            <p>Dry/wet scissor work · architecture & movement · heirloom shears</p>
+          </div>
+        </div>
+        <!-- 2. balayage & light -->
+        <div class="service-card reveal">
+          <div class="image-wrapper">
+            <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=800&h=1000&fit=crop&auto=format&q=80" alt="balayage highlights" loading="lazy">
+          </div>
+          <div class="service-meta">
+            <h3>balayage</h3>
+            <p>Hand‑painted dimension · sunkissed, soft regrowth</p>
+          </div>
+        </div>
+        <!-- 3. textural gloss -->
+        <div class="service-card reveal">
+          <div class="image-wrapper">
+            <img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=800&h=1000&fit=crop&auto=format&q=80" alt="hair gloss treatment" loading="lazy">
+          </div>
+          <div class="service-meta">
+            <h3>textural gloss</h3>
+            <p>Translucent shine · bond repair · weightless finish</p>
+          </div>
+        </div>
+        <!-- 4. editorial styling -->
+        <div class="service-card reveal">
+          <div class="image-wrapper">
+            <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=800&h=1000&fit=crop&auto=format&q=80" alt="bridal editorial updo" loading="lazy">
+          </div>
+          <div class="service-meta">
+            <h3>editorial</h3>
+            <p>Red carpet, bridal, shows · sculpted forms</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS — two sincere, intimate reviews -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="reveal">
+        <h2 class="section-title" style="text-align: center;">testimonials</h2>
+        <div class="section-subhead" style="text-align: center;">from our community</div>
+      </div>
+      <div class="testimonial-grid">
+        <!-- review 1 -->
+        <div class="testimonial-item reveal">
+          <div class="testimonial-quote">
+            I’ve never had a consultation that felt so collaborative. They listened to how my curls behaved, not just how they looked. The result? shape that lasts and zero anxiety.
+          </div>
+          <div class="testimonial-author">
+            <div>
+              <div class="author-name">Maya Okonkwo</div>
+              <div class="author-title">curator · dalston</div>
+            </div>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <!-- review 2 -->
+        <div class="testimonial-item reveal">
+          <div class="testimonial-quote">
+            The balayage is so subtle and dimensional—people keep asking if I’ve been on holiday. And the atmosphere is calm, no loud music, just good conversation. My new ritual.
+          </div>
+          <div class="testimonial-author">
+            <div>
+              <div class="author-name">James Carter</div>
+              <div class="author-title">designer · shoreditch</div>
+            </div>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT — direct, essential links -->
+  <section class="contact">
+    <div class="container">
+      <div class="reveal">
+        <h2 class="section-title" style="text-align: center;">connect</h2>
+        <div class="section-subhead" style="text-align: center;">always human, always prompt</div>
+      </div>
+      <div class="contact-links reveal">
+        <!-- WhatsApp -->
+        <a href="https://wa.me/447123456789?text=Hello%20Velvet%20Strands%20—%20booking%20inquiry" class="contact-link" target="_blank">
+          <i class="fab fa-whatsapp"></i>
+          <span>WhatsApp</span>
+        </a>
+        <!-- Instagram -->
+        <a href="#" class="contact-link" target="_blank">
+          <i class="fab fa-instagram"></i>
+          <span>Instagram</span>
+        </a>
+        <!-- Email -->
+        <a href="mailto:reservations@velvetstrands.com" class="contact-link">
+          <i class="far fa-envelope"></i>
+          <span>Email</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — social, copyright, refined -->
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/447123456789" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      </div>
+      <div class="footer-copy">
+        <p>© <span id="currentYear"></span> VELVET STRANDS · LONDON</p>
+        <p style="margin-top: 16px; letter-spacing: 3px;">— atelier of quiet luxury —</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT: scroll reveal, back to top, dynamic year, polish -->
+  <script>
+    (function() {
+      "use strict";
+
+      // --- dynamic year in footer ---
+      document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+      // --- scroll reveal (Intersection Observer) ---
+      const reveals = document.querySelectorAll('.reveal');
+      
+      if (reveals.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+              // optional: keep observer after reveal
+            }
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
+
+        reveals.forEach(el => observer.observe(el));
+      }
+
+      // --- back to top button visibility + smooth scroll ---
+      const toTopBtn = document.getElementById('toTopBtn');
+      if (toTopBtn) {
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 400) {
+            toTopBtn.classList.add('visible');
+          } else {
+            toTopBtn.classList.remove('visible');
+          }
+        });
+
+        toTopBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // --- extra micro‑animation: subtle hero letter spacing on hover (luxury detail) ---
+      const heroH1 = document.querySelector('.hero h1');
+      if (heroH1) {
+        heroH1.addEventListener('mouseenter', () => {
+          heroH1.style.transition = 'letter-spacing 0.25s ease';
+          heroH1.style.letterSpacing = '2px';
+        });
+        heroH1.addEventListener('mouseleave', () => {
+          heroH1.style.letterSpacing = '-0.02em';
+        });
+      }
+
+      // --- smooth anchor for all internal links? not needed, but add to any future ---
+      console.log('🇱🇷 Velvet Strands — professional edition loaded');
+    })();
+  </script>
+
+  <!-- Note: all placeholder images via Unsplash, free for demo. Luxury hair & fashion context -->
+</body>
+</html>
